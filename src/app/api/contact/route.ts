@@ -38,16 +38,47 @@ export async function POST(request: Request) {
       to: email,
       subject: `Thank you for reaching out!`,
       html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-          <h2 style="color: #7c3aed;">Hello ${name},</h2>
-          <p>Thank you for reaching out through my portfolio website!</p>
-          <p>This is an automated reply to confirm that I have received your message. I will review it and get back to you as soon as possible.</p>
-          <hr style="border: 1px solid #eee; margin: 20px 0;" />
-          <h4>Your message:</h4>
-          <p style="white-space: pre-wrap; font-style: italic;">${message}</p>
-          <hr style="border: 1px solid #eee; margin: 20px 0;" />
-          <p>Best regards,</p>
-          <p><strong>Shiva Prakash</strong></p>
+        <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 40px 20px; margin: 0;">
+          <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <!-- Header -->
+            <div style="background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%); background-color: #7c3aed; padding: 40px 30px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: 1px;">Siva Prakash M</h1>
+              <p style="color: #e0e7ff; margin: 10px 0 0 0; font-size: 16px;">Full Stack Developer</p>
+            </div>
+            
+            <!-- Body -->
+            <div style="padding: 40px 30px;">
+              <h2 style="color: #1e293b; font-size: 22px; margin-top: 0;">Hello ${name},</h2>
+              <p style="color: #475569; font-size: 16px; line-height: 1.6;">
+                Thank you so much for reaching out to me! I'm thrilled to connect with you. 
+                This is an automated confirmation that your message has landed safely in my inbox.
+              </p>
+              <p style="color: #475569; font-size: 16px; line-height: 1.6;">
+                I'll be reviewing your inquiry shortly and will get back to you as soon as possible.
+              </p>
+              
+              <!-- Message Summary Card -->
+              <div style="background-color: #f8fafc; border-left: 4px solid #7c3aed; padding: 20px; border-radius: 0 8px 8px 0; margin: 30px 0;">
+                <h4 style="margin: 0 0 10px 0; color: #334155; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Your Message Summary:</h4>
+                <p style="margin: 0; color: #64748b; font-size: 15px; font-style: italic; white-space: pre-wrap; line-height: 1.5;">"${message}"</p>
+              </div>
+              
+              <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 0;">
+                Looking forward to speaking with you!
+              </p>
+            </div>
+            
+            <!-- Footer -->
+            <div style="background-color: #f1f5f9; padding: 25px 30px; text-align: center; border-top: 1px solid #e2e8f0;">
+              <p style="margin: 0; color: #64748b; font-size: 14px;">
+                Best regards,<br/>
+                <strong style="color: #1e293b; font-size: 16px; display: inline-block; margin-top: 5px;">Siva Prakash M</strong>
+              </p>
+            </div>
+          </div>
+          <p style="text-align: center; color: #94a3b8; font-size: 12px; margin-top: 20px;">
+            This is an automated message. Please do not reply directly to this email.
+          </p>
         </div>
       `,
     });
