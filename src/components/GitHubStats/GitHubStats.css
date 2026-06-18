@@ -1,0 +1,271 @@
+.github-stats {
+  background: var(--bg-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.github-stats::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(139,92,246,0.06), transparent 70%);
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+.gh-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.gh-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.75rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(12px);
+  transition: var(--t-med);
+  overflow: hidden;
+  position: relative;
+}
+
+.gh-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--grad-neon);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gh-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-bright);
+  box-shadow: var(--shadow-card), 0 0 30px var(--neon-purple-glow);
+}
+
+.gh-stat-card:hover::before { opacity: 1; }
+
+.gh-stat-card__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+}
+
+.gh-stat-card__img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.gh-stats__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .gh-stats__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .gh-stats__grid { grid-template-columns: 1fr; }
+  .gh-stat-card { padding: 1.25rem 1rem; }
+}
+
+/* ─── Custom Card Content Styling ─── */
+.gh-custom-stats-list,
+.gh-custom-languages-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.gh-custom-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.gh-custom-stat-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.gh-custom-stat-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gh-custom-stat-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  filter: drop-shadow(0 0 4px var(--neon-purple-glow));
+}
+
+.gh-custom-stat-name {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.gh-custom-stat-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/* ─── Custom Language Card Styling ─── */
+.gh-custom-lang-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gh-custom-lang-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gh-custom-lang-name {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.gh-custom-lang-pct {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.gh-custom-lang-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-input);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.gh-custom-lang-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Skeleton Pulse Loading Animation ─── */
+@keyframes ghPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.95; }
+}
+
+.gh-skeleton-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  animation: ghPulse 1.5s infinite ease-in-out;
+}
+
+.gh-skeleton-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gh-skeleton-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gh-skeleton-icon {
+  width: 16px;
+  height: 16px;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: 50%;
+}
+
+.gh-skeleton-text {
+  width: 100px;
+  height: 12px;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: 4px;
+}
+
+.gh-skeleton-value {
+  width: 35px;
+  height: 12px;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: 4px;
+}
+
+.gh-skeleton-item-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.gh-skeleton-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.gh-skeleton-text-short {
+  width: 80px;
+  height: 12px;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: 4px;
+}
+
+.gh-skeleton-text-tiny {
+  width: 30px;
+  height: 10px;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: 4px;
+}
+
+.gh-skeleton-bar {
+  width: 100%;
+  height: 6px;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: 3px;
+}
+
+.gh-custom-stat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+

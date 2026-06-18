@@ -1,0 +1,102 @@
+.stats-section {
+  position: relative;
+  padding: 4rem 0;
+  overflow: hidden;
+}
+
+.stats-section__line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.3), rgba(0,210,255,0.3), transparent);
+}
+
+.stats-section__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 3rem 0;
+}
+
+/* ─── Stat Card ─── */
+.stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem 1.5rem;
+  min-width: 160px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  flex: 1;
+  max-width: 220px;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--stat-color);
+  box-shadow: 0 20px 50px -10px var(--stat-glow), 0 0 0 1px var(--stat-color);
+}
+
+/* Bottom accent line */
+.stat-card__accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0.8;
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.stat-card:hover .stat-card__accent { transform: scaleX(1); }
+
+.stat-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+  opacity: 0.9;
+}
+
+.stat-card__value {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--stat-color);
+  line-height: 1;
+  text-shadow: 0 0 20px var(--stat-glow);
+  letter-spacing: -0.02em;
+}
+
+.stat-card__label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .stats-section__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .stats-section__grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .stat-card { min-width: unset; max-width: 100%; padding: 1.5rem 1rem; }
+  .stat-card__value { font-size: 1.8rem; }
+}
+
+@media (max-width: 480px) {
+  .stats-section__grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 2rem 0; }
+  .stat-card__value { font-size: 1.5rem; }
+  .stat-card { padding: 1.2rem 0.75rem; }
+}
