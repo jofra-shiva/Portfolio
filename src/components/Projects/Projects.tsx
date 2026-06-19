@@ -142,7 +142,6 @@ const Projects = ({ projects, loading, info }) => {
                 slidesPerView="auto"
                 spaceBetween={30}
                 loop={projects.length > 1}
-                loopAdditionalSlides={projects.length}
                 coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 1.5, slideShadows: false }}
                 autoplay={projects.length >= 2 ? { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true } : false}
                 navigation={true}
@@ -151,11 +150,15 @@ const Projects = ({ projects, loading, info }) => {
                 modules={[EffectCoverflow, Navigation, Pagination, Autoplay]}
                 className="projects__swiper"
               >
-                {(projects.length > 1 && projects.length <= 5
-                  ? [...projects, ...projects, ...projects]
-                  : projects
-                ).map((p, i) => (
-                  <SwiperSlide key={`${p._id}-${i}`}>
+                {(() => {
+                  if (projects.length <= 1) return projects;
+                  let display = [...projects];
+                  while (display.length < 12) {
+                    display = [...display, ...projects];
+                  }
+                  return display;
+                })().map((p, i) => (
+                  <SwiperSlide key={`${p._id || p.id || p.title}-${i}`}>
                     <ProjectCard project={p} onClick={setSelected} index={i % projects.length} />
                   </SwiperSlide>
                 ))}
