@@ -1,65 +1,62 @@
 "use client";
 import { useState, useEffect } from 'react';
-import Hero from '../components/Hero/Hero';
-import About from '../components/About/About';
-import Skills from '../components/Skills/Skills';
-import GitHubStats from '../components/GitHubStats/GitHubStats';
-import Projects from '../components/Projects/Projects';
-import Achievements from '../components/Achievements/Achievements';
-import Testimonials from '../components/Testimonials/Testimonials';
-import Contact from '../components/Contact/Contact';
+import { AnimatePresence } from 'framer-motion';
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
-import { getProjects, getSkills, getPortfolioInfo, getStats, getTimeline, getTestimonials } from '../lib/db';
+import LandingGate from '../components/OS/LandingGate';
+import CinematicIntro from '../components/OS/CinematicIntro';
+import Desktop from '../components/OS/Desktop';
+import ClientLayout from '../components/Layout/ClientLayout';
+import { getProjects, getSkills, getPortfolioInfo, getStats, getTimeline, getTestimonials, getAchievements } from '../lib/db';
 import { db } from '../lib/firebase';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
-import ClientLayout from '../components/Layout/ClientLayout';
+
+type Phase = 'loading' | 'landing' | 'intro' | 'desktop';
 
 export default function PortfolioPage() {
-  const [info, setInfo] = useState(null);
-  const [projects, setProjects] = useState([]);
-  const [skills, setSkills] = useState([]);
-  const [stats, setStats] = useState([]);
-  const [timeline, setTimeline] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isLeaving, setIsLeaving] = useState(false);
+  const [phase, setPhase] = useState<Phase>('loading');
+  const [info, setInfo] = useState<any>(null);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [skills, setSkills] = useState<any[]>([]);
+  const [stats, setStats] = useState<any[]>([]);
+  const [timeline, setTimeline] = useState<any[]>([]);
+  const [achievements, setAchievements] = useState<any[]>([]);
   const [commitsCount, setCommitsCount] = useState(500);
+  const [isLeaving, setIsLeaving] = useState(false);
+  const [dataReady, setDataReady] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [infoRes, projectsRes, skillsRes, statsRes, timelineRes, testimonialsRes] = await Promise.all([
+        const [infoRes, projectsRes, skillsRes, statsRes, timelineRes, achievementsRes] = await Promise.all([
           getPortfolioInfo(),
           getProjects(),
           getSkills(),
           getStats(),
           getTimeline(),
-          getTestimonials(),
+          getAchievements(),
         ]);
         setInfo(infoRes);
         setProjects(Array.isArray(projectsRes) ? projectsRes : []);
         setSkills(Array.isArray(skillsRes) ? skillsRes : []);
         setStats(Array.isArray(statsRes) ? statsRes : []);
         setTimeline(Array.isArray(timelineRes) ? timelineRes : []);
-        setTestimonials(Array.isArray(testimonialsRes) ? testimonialsRes : []);
+        setAchievements(Array.isArray(achievementsRes) ? achievementsRes : []);
       } catch (err) {
         console.error('Failed to load portfolio data:', err);
       } finally {
-        setLoading(false);
+        setDataReady(true);
       }
     };
 
     fetchData();
 
-    // Real-time listener for timeline — updates portfolio live without refresh
+    // Real-time listener for timeline
     const timelineQ = query(collection(db, 'timeline'), orderBy('order', 'asc'));
-    const unsubscribeTimeline = onSnapshot(timelineQ, (snapshot) => {
+    const unsubTimeline = onSnapshot(timelineQ, (snapshot) => {
       setTimeline(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
 
-    return () => {
-      unsubscribeTimeline();
-    };
+    return () => { unsubTimeline(); };
   }, []);
 
   useEffect(() => {
@@ -69,115 +66,61 @@ export default function PortfolioPage() {
     if (!username) return;
 
     const fetchCommits = async () => {
-      // 1. Try scraping contributions API with Cache-Control: no-cache to get real-time data
       try {
-        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        });
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`, { headers: { 'Cache-Control': 'no-cache' } });
         if (res.ok) {
           const data = await res.json();
           if (data.total) {
             const sum = Object.values(data.total).reduce((a: any, b: any) => a + b, 0) as number;
-            if (sum > 0) {
-              setCommitsCount(sum);
-              return;
-            }
+            if (sum > 0) { setCommitsCount(sum); return; }
           }
-        } else if (res.status === 429) {
-          console.warn('Cache-control bypass rate-limited, falling back to cached scraper');
         }
-      } catch (err) {
-        console.warn('Scraper cache bypass failed, falling back to cached scraper:', err);
-      }
-
-      // 2. Fallback: Try fetching without Cache-Control header (serves cached version)
+      } catch {}
       try {
-        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data.total) {
-            const sum = Object.values(data.total).reduce((a: any, b: any) => a + b, 0) as number;
-            if (sum > 0) {
-              setCommitsCount(sum);
-              return;
-            }
-          }
-        }
-      } catch (err) {
-        console.warn('Cached scraper failed, falling back to Search API:', err);
-      }
-
-      // 3. Last Fallback: Use official Search API (public commits only, subject to index lag)
-      try {
-        const res = await fetch(`https://api.github.com/search/commits?q=author:${username}`, {
-          headers: {
-            Accept: 'application/vnd.github.v3+json',
-          }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.total_count !== undefined) {
-            setCommitsCount(data.total_count);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to fetch commits count:', err);
-      }
+        const res = await fetch(`https://api.github.com/search/commits?q=author:${username}`, { headers: { Accept: 'application/vnd.github.v3+json' } });
+        if (res.ok) { const d = await res.json(); if (d.total_count) setCommitsCount(d.total_count); }
+      } catch {}
     };
     fetchCommits();
   }, [info]);
 
-  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
-
+  // Min loading time
+  const [minElapsed, setMinElapsed] = useState(false);
   useEffect(() => {
-    // Enforce 0.8 seconds minimum loading screen time (reduced from 1.78s to improve LCP)
-    const timer = setTimeout(() => setMinTimeElapsed(true), 800);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setMinElapsed(true), 800);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    if (!loading && minTimeElapsed) {
+    if (dataReady && minElapsed && phase === 'loading') {
       setIsLeaving(true);
+      setTimeout(() => setPhase('landing'), 800);
     }
-  }, [loading, minTimeElapsed]);
+  }, [dataReady, minElapsed, phase]);
+
+  const data = { info, projects, skills, stats, timeline, achievements, commitsCount };
 
   return (
     <ClientLayout>
-      <LoadingSpinner isLeaving={isLeaving} name={info?.name} />
+      {/* Loading spinner */}
+      {phase === 'loading' && <LoadingSpinner isLeaving={isLeaving} name={info?.name} />}
 
-      <div
-        style={{
-          opacity: isLeaving ? 1 : 0,
-          visibility: isLeaving ? 'visible' : 'hidden',
-          transition: 'opacity 0.7s ease-in-out',
-        }}
-      >
-        {/* 1. Hero – First impression */}
-        <Hero info={info} projects={projects} skills={skills} stats={stats} projectsCount={projects.length} commitsCount={commitsCount} />
+      <AnimatePresence mode="wait">
+        {/* Phase 1: Landing Gate */}
+        {phase === 'landing' && (
+          <LandingGate key="landing" onEnter={() => setPhase('intro')} />
+        )}
 
+        {/* Phase 2: Cinematic Intro */}
+        {phase === 'intro' && (
+          <CinematicIntro key="intro" onComplete={() => setPhase('desktop')} name={info?.name} />
+        )}
 
-
-        {/* 3. About – Story & Timeline */}
-        <About info={info} timeline={timeline} />
-
-        {/* 4. Skills – Tech stack showcase */}
-        <Skills skills={skills} />
-
-        {/* 5. Projects – Work showcase */}
-        <Projects projects={projects} loading={loading} info={info} />
-
-        {/* 6. Achievements – Awards / Certs / Experience */}
-        <Achievements />
-
-        {/* 7. GitHub – Contribution activity */}
-        <GitHubStats info={info} commitsCount={commitsCount} />
-
-
-        {/* 9. Contact – Call to action */}
-        <Contact info={info} />
-      </div>
+        {/* Phase 3: OS Desktop */}
+        {phase === 'desktop' && (
+          <Desktop key="desktop" data={data} />
+        )}
+      </AnimatePresence>
     </ClientLayout>
   );
 }

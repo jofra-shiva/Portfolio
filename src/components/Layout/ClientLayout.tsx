@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from 'react';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
 import Chatbot from '../Chatbot/Chatbot';
 import { getPortfolioInfo } from '../../lib/db';
 import useLenis from '../../hooks/useLenis';
+
+// NOTE: Navbar and Footer are removed — the OS Desktop has its own MenuBar + Dock.
+// ClientLayout now provides: Lenis smooth scroll, theme syncing, Chatbot (AI assistant still available).
 
 const ClientLayout = ({ children }) => {
   const [info, setInfo] = useState(null);
@@ -25,9 +26,9 @@ const ClientLayout = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (info && info.themeName) {
-      document.documentElement.setAttribute('data-color-theme', info.themeName);
-      localStorage.setItem('color-theme', info.themeName);
+    if (info && (info as any).themeName) {
+      document.documentElement.setAttribute('data-color-theme', (info as any).themeName);
+      localStorage.setItem('color-theme', (info as any).themeName);
     } else if (info) {
       document.documentElement.setAttribute('data-color-theme', 'purple');
       localStorage.setItem('color-theme', 'purple');
@@ -36,14 +37,11 @@ const ClientLayout = ({ children }) => {
 
   return (
     <>
-      <Navbar info={info} />
-      <main>
-        {children}
-      </main>
-      <Footer info={info} />
+      {children}
       <Chatbot />
     </>
   );
 };
 
 export default ClientLayout;
+
