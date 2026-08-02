@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import LandingGate from '../components/OS/LandingGate';
 import Desktop from '../components/OS/Desktop';
 import ClientLayout from '../components/Layout/ClientLayout';
@@ -9,10 +8,10 @@ import { getProjects, getSkills, getPortfolioInfo, getStats, getTimeline, getTes
 import { db } from '../lib/firebase';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
-type Phase = 'loading' | 'landing' | 'desktop';
+type Phase = 'landing' | 'desktop';
 
 export default function PortfolioPage() {
-  const [phase, setPhase] = useState<Phase>('loading');
+  const [phase, setPhase] = useState<Phase>('landing');
   const [info, setInfo] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
@@ -20,8 +19,6 @@ export default function PortfolioPage() {
   const [timeline, setTimeline] = useState<any[]>([]);
   const [achievements, setAchievements] = useState<any[]>([]);
   const [commitsCount, setCommitsCount] = useState(500);
-  const [isLeaving, setIsLeaving] = useState(false);
-  const [dataReady, setDataReady] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,8 +39,6 @@ export default function PortfolioPage() {
         setAchievements(Array.isArray(achievementsRes) ? achievementsRes : []);
       } catch (err) {
         console.error('Failed to load portfolio data:', err);
-      } finally {
-        setDataReady(true);
       }
     };
 
@@ -83,27 +78,10 @@ export default function PortfolioPage() {
     fetchCommits();
   }, [info]);
 
-  // Min loading time
-  const [minElapsed, setMinElapsed] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setMinElapsed(true), 800);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    if (dataReady && minElapsed && phase === 'loading') {
-      setIsLeaving(true);
-      setTimeout(() => setPhase('landing'), 800);
-    }
-  }, [dataReady, minElapsed, phase]);
-
   const data = { info, projects, skills, stats, timeline, achievements, commitsCount };
 
   return (
     <ClientLayout>
-      {/* Loading spinner */}
-      {phase === 'loading' && <LoadingSpinner isLeaving={isLeaving} name={info?.name} />}
-
       <AnimatePresence mode="wait">
         {/* Phase 1: Landing Gate — full portfolio intro */}
         {phase === 'landing' && (
