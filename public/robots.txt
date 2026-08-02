@@ -1,8 +1,92 @@
+# robots.txt — sivaprakashm.in
+# Generated for full Google Search, Bing, and AI search engine compatibility
+
+# ── Default: allow all crawlers ────────────────────────────────────────────
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Crawl-delay: 1
 
-# Disallow admin panel from indexing
+# ── Google ──────────────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://sivaprakashm.vercel.app/sitemap.xml
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /admin/
+
+# ── Bing ────────────────────────────────────────────────────────────────────
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# ── AI Search Engines ────────────────────────────────────────────────────────
+# Allow all AI crawlers to read public content for identity recognition
+
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Disallow: /admin/
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Gemini
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+Allow: /llms.txt
+
+User-agent: YouBot
+Allow: /
+Allow: /llms.txt
+
+# ── Social Crawlers ──────────────────────────────────────────────────────────
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# ── Sitemaps ─────────────────────────────────────────────────────────────────
+Sitemap: https://www.sivaprakashm.in/sitemap.xml

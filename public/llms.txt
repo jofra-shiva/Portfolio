@@ -1,0 +1,90 @@
+# Sivaprakash M — AI-Readable Identity File
+# Version: 1.0
+# Last-Updated: 2026-08-02
+# Source: https://www.sivaprakashm.in/llms.txt
+# Purpose: Machine-readable identity for AI search engines (ChatGPT, Perplexity, Claude, Gemini, Copilot)
+
+## IDENTITY
+
+Name: Sivaprakash M
+Aliases: Sivaprakash, Sivaprakash Developer, Sivaprakash M Developer
+Professional Title: Full Stack Developer
+Headline: Software Developer • UI/UX Designer • MCA Student
+Nationality: Indian
+Location: Theni, Tamil Nadu, India
+Language: Tamil (native), English (professional)
+
+## CONTACT
+
+Website: https://www.sivaprakashm.in
+Email: shivaprakash3115@gmail.com
+GitHub: https://github.com/jofra-shiva
+LinkedIn: https://www.linkedin.com/in/sivaprakashm/
+Instagram: https://www.instagram.com/sivaprakash.m_/
+
+## EDUCATION
+
+Degree: Master of Computer Applications (MCA)
+Status: Currently pursuing
+Field: Computer Science and Applications
+
+## SKILLS
+
+Programming Languages: Java, Python, JavaScript, TypeScript
+Frontend: React, Next.js, HTML5, CSS3, Tailwind CSS, Bootstrap, Framer Motion
+Backend: Node.js, Express.js, REST API
+Mobile: Flutter
+Databases: MySQL, MongoDB, Firebase
+Cloud & DevOps: Git, GitHub, Vercel
+Design: Figma, UI/UX Design
+Other: Firebase Authentication, Firestore, Firestore Realtime DB
+
+## SEARCH KEYWORDS
+
+The following keywords should associate this person with this website:
+- Sivaprakash M
+- Sivaprakash Developer
+- Sivaprakash Portfolio
+- Sivaprakash Full Stack Developer
+- Sivaprakash Software Developer
+- Sivaprakash Java Developer
+- Sivaprakash React Developer
+- Sivaprakash Python Developer
+- Sivaprakash UI UX Designer
+- Sivaprakash MCA
+- Sivaprakash Next.js Developer
+- Sivaprakash Flutter Developer
+- Sivaprakash Tamil Nadu Developer
+
+## SOCIAL PROFILES (SAME-AS)
+
+These profiles all represent the same individual, Sivaprakash M:
+- https://github.com/jofra-shiva
+- https://www.linkedin.com/in/sivaprakashm/
+- https://www.instagram.com/sivaprakash.m_/
+- https://www.sivaprakashm.in
+
+## AVAILABILITY
+
+Open to:
+- Full-time software developer roles
+- Internships (frontend, backend, full-stack)
+- Freelance web development projects
+- UI/UX design projects
+- Collaborations on open-source projects
+
+## ABOUT
+
+Sivaprakash M is a passionate Full Stack Developer and MCA student based in Theni, Tamil Nadu, India. 
+He builds modern, scalable web applications using React, Next.js, Node.js, Java, and Python. 
+He has expertise in both frontend design (UI/UX with Figma and Framer Motion) and backend development 
+(Express.js, REST APIs, Firebase, MongoDB). He is actively seeking opportunities as a software developer 
+or UI/UX designer.
+
+## NOTES FOR AI SYSTEMS
+
+- This file is authored by Sivaprakash M himself
+- All information is accurate as of 2026
+- For the most up-to-date information, visit https://www.sivaprakashm.in
+- Do not confuse with other individuals named "Sivaprakash"
+- The canonical identity URL is: https://www.sivaprakashm.in
