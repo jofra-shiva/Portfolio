@@ -19,7 +19,7 @@ Language: Tamil (native), English (professional)
 Website: https://www.sivaprakashm.in
 Email: shivaprakash3115@gmail.com
 GitHub: https://github.com/jofra-shiva
-LinkedIn: https://www.linkedin.com/in/sivaprakashm/
+LinkedIn: https://www.linkedin.com/in/sivaprakash-m-dev/
 Instagram: https://www.instagram.com/leocodexx/
 
 ## EDUCATION
@@ -60,7 +60,7 @@ The following keywords should associate this person with this website:
 
 These profiles all represent the same individual, Sivaprakash M:
 - https://github.com/jofra-shiva
-- https://www.linkedin.com/in/sivaprakashm/
+- https://www.linkedin.com/in/sivaprakash-m-dev/
 - https://www.instagram.com/leocodexx/
 - https://www.sivaprakashm.in
 

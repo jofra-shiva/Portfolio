@@ -157,7 +157,7 @@ export default function PortfolioPage() {
               GitHub: <a href="https://github.com/jofra-shiva" rel="me">github.com/jofra-shiva</a>
             </li>
             <li>
-              LinkedIn: <a href="https://www.linkedin.com/in/sivaprakashm/" rel="me">linkedin.com/in/sivaprakashm</a>
+              LinkedIn: <a href="https://www.linkedin.com/in/sivaprakash-m-dev/" rel="me">linkedin.com/in/sivaprakash-m-dev</a>
             </li>
             <li>
               Instagram: <a href="https://www.instagram.com/leocodexx/" rel="me">instagram.com/leocodexx</a>
