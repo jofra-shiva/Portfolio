@@ -2,16 +2,14 @@
 import { useState, useEffect } from 'react';
 import Chatbot from '../Chatbot/Chatbot';
 import { getPortfolioInfo } from '../../lib/db';
-import useLenis from '../../hooks/useLenis';
 
 // NOTE: Navbar and Footer are removed — the OS Desktop has its own MenuBar + Dock.
-// ClientLayout now provides: Lenis smooth scroll, theme syncing, Chatbot (AI assistant still available).
+// Lenis is disabled — the OS desktop is fixed-position with no page scroll.
+// ClientLayout now provides: theme syncing + Chatbot (AI assistant still available).
 
 const ClientLayout = ({ children }) => {
   const [info, setInfo] = useState(null);
 
-  // Initialize Lenis smooth scroll
-  useLenis();
 
   useEffect(() => {
     const fetchInfo = async () => {
