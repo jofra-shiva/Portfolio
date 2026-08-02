@@ -263,6 +263,8 @@ export default function ContactWindow({ info }: { info: any }) {
         .premium-detail-icon {
           width: 48px;
           height: 48px;
+          min-width: 48px;
+          flex-shrink: 0;
           background: rgba(0, 255, 135, 0.05);
           border: 1px solid rgba(0, 255, 135, 0.1);
           border-radius: 14px;
@@ -287,6 +289,7 @@ export default function ContactWindow({ info }: { info: any }) {
           font-weight: 500;
           text-decoration: none;
           transition: color 0.2s;
+          word-break: break-word;
         }
         a.premium-detail-val:hover {
           color: #00ff87;
