@@ -49,7 +49,7 @@ const jsonLd = {
       sameAs: [
         "https://github.com/jofra-shiva",
         "https://www.linkedin.com/in/sivaprakashm/",
-        "https://www.instagram.com/sivaprakash.m_/",
+        "https://www.instagram.com/leocodexx/",
         BASE_URL,
       ],
     },
