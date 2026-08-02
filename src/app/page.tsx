@@ -165,6 +165,33 @@ export default function PortfolioPage() {
             <li>Location: Theni, Tamil Nadu, India</li>
           </ul>
         </section>
+
+        <section aria-label="Projects and Portfolio">
+          <h2>Featured Portfolio Projects</h2>
+          <ul>
+            <li>
+              <strong>MSDev:</strong> A developer project management platform. Live Demo: <a href="https://msdev-eight.vercel.app/" rel="noopener noreferrer">https://msdev-eight.vercel.app/</a>
+            </li>
+            <li>
+              <strong>Time Lion:</strong> Premium watches platform. Live Demo: <a href="https://www.timelion.in/" rel="noopener noreferrer">https://www.timelion.in/</a>
+            </li>
+            <li>
+              <strong>AVSECO Smart ERP:</strong> ERP System. Live Demo: <a href="https://avseco-f.vercel.app/" rel="noopener noreferrer">https://avseco-f.vercel.app/</a>
+            </li>
+            <li>
+              <strong>Emo News:</strong> Emotion-based news app. Live Demo: <a href="https://emo-news-6tz6.vercel.app/overview" rel="noopener noreferrer">https://emo-news-6tz6.vercel.app/overview</a>
+            </li>
+            <li>
+              <strong>LeoChat:</strong> Flexible chat platform. Live Demo: <a href="https://leochat.vercel.app/" rel="noopener noreferrer">https://leochat.vercel.app/</a>
+            </li>
+            <li>
+              <strong>MySql Learning:</strong> Desktop App. GitHub: <a href="https://github.com/jofra-shiva/MySql-Learn">https://github.com/jofra-shiva/MySql-Learn</a>
+            </li>
+            <li>
+              <strong>JD Game:</strong> Java Game. GitHub: <a href="https://github.com/jofra-shiva/JD_GAME">https://github.com/jofra-shiva/JD_GAME</a>
+            </li>
+          </ul>
+        </section>
       </section>
 
       {/* ── Interactive Portfolio App ──────────────────────────────────────── */}

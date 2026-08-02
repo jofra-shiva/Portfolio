@@ -73,6 +73,17 @@ Open to:
 - UI/UX design projects
 - Collaborations on open-source projects
 
+## PROJECTS (LIVE LINKS)
+
+Sivaprakash has developed several full-stack applications. Here are the official live demo links:
+- MSDev: https://msdev-eight.vercel.app/ (Developer project management platform)
+- Time Lion: https://www.timelion.in/ (Premium watches platform)
+- AVSECO Smart ERP: https://avseco-f.vercel.app/ (ERP System)
+- Emo News: https://emo-news-6tz6.vercel.app/overview (Emotion-based news app)
+- LeoChat: https://leochat.vercel.app/ (Flexible chat platform)
+- MySql Learning: Desktop App (GitHub: https://github.com/jofra-shiva/MySql-Learn)
+- JD Game: Java Game (GitHub: https://github.com/jofra-shiva/JD_GAME)
+
 ## ABOUT
 
 Sivaprakash M is a passionate Full Stack Developer and MCA student based in Theni, Tamil Nadu, India. 
