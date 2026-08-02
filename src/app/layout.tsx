@@ -51,18 +51,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" data-theme="dark">
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  var savedTheme = localStorage.getItem('theme');
-                  var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-                  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                  }
+                  document.documentElement.setAttribute('data-theme', 'dark');
                   var savedColorTheme = localStorage.getItem('color-theme');
                   if (savedColorTheme) {
                     document.documentElement.setAttribute('data-color-theme', savedColorTheme);

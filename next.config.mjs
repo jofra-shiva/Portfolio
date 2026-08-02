@@ -9,7 +9,7 @@ const nextConfig = {
   turbopack: {
     root: path.join(__dirname, '..'),
   },
-  allowedDevOrigins: ['10.39.72.120'],
+  allowedDevOrigins: ['10.39.72.120', '10.106.80.120', 'localhost', '0.0.0.0'],
   compress: true,
   images: {
     remotePatterns: [

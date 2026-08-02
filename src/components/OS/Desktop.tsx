@@ -66,39 +66,53 @@ const KaliIcons = {
   ),
 };
 
-// Kali Linux style: each icon has terminal-style icon + dark gradient
-const DESKTOP_ICONS: { id: string; label: string; color: string; iconColor: string }[] = [
-  { id: 'projects',   label: 'Code Lab',    color: 'linear-gradient(135deg,#0d1b2a,#1a3a5c)', iconColor: '#00d4ff' },
-  { id: 'skills',     label: 'Tech Stack',  color: 'linear-gradient(135deg,#0d1a0d,#1a3a1a)', iconColor: '#00ff88' },
-  { id: 'about',      label: 'Whoami',      color: 'linear-gradient(135deg,#1a0d2e,#2e1a4a)', iconColor: '#a78bfa' },
-  { id: 'experience', label: 'Work Log',    color: 'linear-gradient(135deg,#1a1a0d,#3a2e0d)', iconColor: '#fbbf24' },
-  { id: 'education',  label: 'Edu Shell',   color: 'linear-gradient(135deg,#0d2a1a,#1a4a2e)', iconColor: '#34d399' },
-  { id: 'awards',     label: 'Exploits',    color: 'linear-gradient(135deg,#2a0d0d,#4a1a1a)', iconColor: '#f87171' },
-  { id: 'contact',    label: 'Netcat',      color: 'linear-gradient(135deg,#0d1a2a,#1a2a3a)', iconColor: '#38bdf8' },
-  { id: 'github',     label: 'Git Repo',    color: 'linear-gradient(135deg,#0d0d0d,#1a1a1a)', iconColor: '#e2e8f0' },
+// macOS Blue Folder SVG
+const MacFolder = () => (
+  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}>
+    <path d="M10 35C10 29.4772 14.4772 25 20 25H38.7428C40.6728 25 42.4172 26.1558 43.1497 27.917L46.8503 36.8143C47.2166 37.6953 48.0888 38.2727 49.0536 38.2727H80C85.5228 38.2727 90 42.75 90 48.2727V75C90 80.5228 85.5228 85 80 85H20C14.4772 85 10 80.5228 10 75V35Z" fill="#88C6FF"/>
+    <path d="M10 42C10 36.4772 14.4772 32 20 32H80C85.5228 32 90 36.4772 90 42V75C90 80.5228 85.5228 85 80 85H20C14.4772 85 10 80.5228 10 75V42Z" fill="#3AA0FF"/>
+    <path d="M10 42C10 36.4772 14.4772 32 20 32H80C85.5228 32 90 36.4772 90 42V45H10V42Z" fill="#67B6FF"/>
+  </svg>
+);
+
+const DESKTOP_ICONS: { id: string; label: string }[] = [
+  { id: 'projects',   label: 'Projects' },
+  { id: 'skills',     label: 'Skills' },
+  { id: 'about',      label: 'About Me' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'education',  label: 'Education' },
+  { id: 'awards',     label: 'Awards' },
+  { id: 'github',     label: 'GitHub' },
+  { id: 'contact',    label: 'Contact' },
 ];
 
-const WINDOW_META: Record<string, { title: string; icon: string }> = {
-  projects:   { title: 'Code Lab',   icon: '</>' },
-  skills:     { title: 'Tech Stack', icon: '⬡' },
-  about:      { title: 'Whoami',     icon: '$' },
-  experience: { title: 'Work Log',   icon: '▸' },
-  education:  { title: 'Edu Shell',  icon: '⊕' },
-  awards:     { title: 'Exploits',   icon: '★' },
-  contact:    { title: 'Netcat',     icon: '~' },
-  github:     { title: 'Git Repo',   icon: '⎇' },
+export const WINDOW_META: Record<string, { title: string; icon: string }> = {
+  projects:   { title: 'Projects',   icon: '📁' },
+  skills:     { title: 'Skills',     icon: '📁' },
+  about:      { title: 'About Me',   icon: '📁' },
+  experience: { title: 'Experience', icon: '📁' },
+  education:  { title: 'Education',  icon: '📁' },
+  awards:     { title: 'Awards',     icon: '📁' },
+  contact:    { title: 'Contact',    icon: '📁' },
+  github:     { title: 'GitHub',     icon: '📁' },
 };
 
 function DesktopIcons({ onOpen }: { onOpen: (id: WindowId) => void }) {
   const { isOpen } = useWindowManager();
   const [clickTimes, setClickTimes] = useState<Record<string, number>>({});
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
 
-  const handleClick = (id: string) => {
+  const handleClick = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedIcon(id);
+    
     const isMobile = window.matchMedia('(pointer: coarse)').matches;
     if (isMobile) { onOpen(id as WindowId); return; }
+    
     const now = Date.now();
     const last = clickTimes[id] || 0;
     if (now - last < 400) {
+      // Double click
       onOpen(id as WindowId);
       setClickTimes(prev => ({ ...prev, [id]: 0 }));
     } else {
@@ -106,45 +120,112 @@ function DesktopIcons({ onOpen }: { onOpen: (id: WindowId) => void }) {
     }
   };
 
+  // Deselect when clicking outside
+  useEffect(() => {
+    const handleGlobalClick = () => setSelectedIcon(null);
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
+
   return (
-    <div className="os-icons-area" aria-label="Desktop icons">
+    <div 
+      className="mac-desktop-grid" 
+      aria-label="Desktop icons"
+    >
       {DESKTOP_ICONS.map((icon, i) => {
-        const active = isOpen(icon.id as WindowId);
+        const isSelected = selectedIcon === icon.id;
         return (
           <motion.div
             key={icon.id}
-            className={`os-icon kali-icon${active ? ' selected' : ''}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05, type: 'spring', stiffness: 280, damping: 22 }}
-            onClick={() => handleClick(icon.id)}
+            className="mac-desktop-icon"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.05, duration: 0.3 }}
+            onClick={(e) => handleClick(icon.id, e)}
             role="button"
             tabIndex={0}
             id={`desktop-icon-${icon.id}`}
             aria-label={`Open ${icon.label}`}
             onKeyDown={e => e.key === 'Enter' && onOpen(icon.id as WindowId)}
           >
-            <motion.div
-              className="kali-icon__box"
-              style={{
-                background: icon.color,
-                color: icon.iconColor,
-                boxShadow: active
-                  ? `0 0 0 2px ${icon.iconColor}60, 0 8px 32px rgba(0,0,0,0.6)`
-                  : '0 4px 20px rgba(0,0,0,0.5)',
-                border: `1px solid ${icon.iconColor}20`,
-              }}
-              whileHover={{ scale: 1.1, y: -8, boxShadow: `0 0 0 1px ${icon.iconColor}40, 0 12px 40px rgba(0,0,0,0.7)` }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 18 }}
-            >
-              {KaliIcons[icon.id as keyof typeof KaliIcons]}
-            </motion.div>
-            <span className="kali-icon__label">{icon.label}</span>
-            {active && <div className="kali-icon__dot" style={{ background: icon.iconColor }} />}
+            <div className={`mac-icon-img ${isSelected ? 'selected' : ''}`}>
+              <MacFolder />
+            </div>
+            <span className={`mac-icon-label ${isSelected ? 'selected' : ''}`}>
+              {icon.label}
+            </span>
           </motion.div>
         );
       })}
+      
+      <style>{`
+        .mac-desktop-grid {
+          position: absolute;
+          top: 60px;
+          right: 20px;
+          display: grid;
+          grid-template-columns: repeat(1, 1fr);
+          grid-auto-flow: column;
+          grid-template-rows: repeat(8, auto);
+          gap: 24px;
+          padding: 20px;
+          pointer-events: auto;
+          z-index: 10;
+        }
+        
+        .mac-desktop-icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          width: 80px;
+          cursor: default;
+        }
+        
+        .mac-icon-img {
+          width: 64px;
+          height: 64px;
+          border-radius: 8px;
+          padding: 2px;
+          transition: all 0.1s;
+        }
+        
+        .mac-icon-img.selected {
+          background-color: rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .mac-icon-label {
+          color: white;
+          font-size: 13px;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          text-align: center;
+          text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+          padding: 2px 6px;
+          border-radius: 4px;
+          margin-top: 4px;
+          user-select: none;
+          word-break: break-word;
+          line-height: 1.2;
+        }
+        
+        .mac-icon-label.selected {
+          background-color: #0a84ff;
+          color: white;
+          text-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+          .mac-desktop-grid {
+            right: auto;
+            left: 10px;
+            top: 40px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            grid-auto-flow: row;
+          }
+        }
+      `}</style>
     </div>
   );
 }
@@ -246,15 +327,131 @@ function WindowRenderer({ data }: { data: any }) {
   );
 }
 
+function CenterWelcome({ data }: { data: any }) {
+  return (
+    <div style={{
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      pointerEvents: 'none',
+      zIndex: 10,
+      paddingBottom: '80px' // Offset upwards to balance with the dock
+    }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        style={{ textAlign: 'center' }}
+      >
+        <h1 style={{ 
+          fontSize: 'clamp(2rem, 8vw, 3.5rem)', 
+          fontWeight: 800, 
+          letterSpacing: '-1px',
+          marginBottom: '0.5rem',
+          color: '#ffffff',
+          textShadow: '0 4px 30px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6)',
+          lineHeight: '1.2'
+        }}>
+          Hello, I am {data.info?.name || 'Sivaprakash'}
+        </h1>
+        <div style={{
+          fontSize: 'clamp(1.5rem, 5.5vw, 2.2rem)',
+          fontWeight: 600,
+          marginBottom: '1.5rem',
+          textShadow: '0 2px 10px rgba(0,0,0,0.6)',
+          minHeight: '3.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <TypewriterText texts={
+            data.info?.role 
+              ? (Array.isArray(data.info.role) ? data.info.role : [data.info.role]) 
+              : ['Full Stack Developer', 'Software Engineer', 'UI/UX Designer']
+          } />
+        </div>
+        <p style={{
+          fontSize: '1.1rem',
+          color: 'rgba(255,255,255,0.7)',
+          fontWeight: 400,
+          textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+          letterSpacing: '0.5px'
+        }}>
+          Explore my workspace to learn more about my journey.
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+// ── Typewriter Effect Component ──────────────────────────────────────────────
+const TypewriterText = ({ texts }: { texts: string[] }) => {
+  const [text, setText] = useState('');
+  const [index, setIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const fullText = texts[index % texts.length];
+      if (!isDeleting) {
+        setText(fullText.substring(0, text.length + 1));
+        setTypingSpeed(100);
+        if (text === fullText) {
+          setIsDeleting(true);
+          setTypingSpeed(2500); // Wait before deleting
+        }
+      } else {
+        setText(fullText.substring(0, text.length - 1));
+        setTypingSpeed(50);
+        if (text === '') {
+          setIsDeleting(false);
+          setIndex((prev) => prev + 1);
+          setTypingSpeed(500); // Wait before typing next
+        }
+      }
+    }, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, index, texts, typingSpeed]);
+
+  return (
+    <span style={{ fontFamily: 'var(--font-mono)', display: 'inline-flex', alignItems: 'center' }}>
+      <span style={{ color: '#60efff', marginRight: '12px' }}>{'>'}</span>
+      <span style={{ 
+        background: 'linear-gradient(90deg, #00ff87, #60efff)', 
+        WebkitBackgroundClip: 'text', 
+        WebkitTextFillColor: 'transparent',
+        display: 'inline-block'
+      }}>
+        {text}
+      </span>
+      <motion.span
+        animate={{ opacity: [1, 0] }}
+        transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+        style={{ 
+          display: 'inline-block',
+          width: '3px',
+          height: '2.2rem',
+          backgroundColor: '#00ff87',
+          marginLeft: '4px',
+          borderRadius: '2px'
+        }}
+      />
+    </span>
+  );
+};
+
 function DesktopInner({ data }: { data: any }) {
   const { openWindow } = useWindowManager();
   return (
     <div className="os-desktop">
-      <div className="os-wallpaper"><AuroraCanvas /></div>
+      {/* Background image is handled by globals.css */}
       <MenuBar name={data.info?.name} onOpenWindow={id => openWindow(id as WindowId)} />
-      <DesktopIcons onOpen={openWindow} />
+      <CenterWelcome data={data} />
       <Dock onOpenWindow={openWindow} />
-      <WelcomeHint />
       <MinimizedTaskbar />
       <WindowRenderer data={data} />
     </div>

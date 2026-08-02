@@ -1,58 +1,130 @@
-﻿"use client";
-import { useState } from 'react';
+"use client";
 import { motion } from 'framer-motion';
-
-const NODES = [
-  { title: 'Who I Am', icon: '👤', content: 'A passionate Full Stack Developer from Tamil Nadu, India. I craft immersive web experiences with the MERN stack, blending clean code with stunning UI.' },
-  { title: 'Mission', icon: '🎯', content: 'To build scalable, beautiful digital products that make a real difference. I believe great software is both technically excellent and a joy to use.' },
-  { title: 'Current Focus', icon: '🔥', content: 'Pursuing MCA at Bishop Heber College. Actively building full-stack applications, exploring AI integrations, and contributing to open source.' },
-  { title: 'Interests', icon: '💡', content: 'Web development, UI/UX design, artificial intelligence, competitive programming, and exploring new technologies on the cutting edge.' },
-  { title: 'Goals', icon: '🚀', content: 'To join a world-class tech team, build products used by millions, and contribute meaningfully to the developer community through open source.' },
-  { title: 'Future Vision', icon: '🌟', content: 'To become a tech lead who builds impactful products at scale, while mentoring the next generation of developers from India to the world.' },
-];
+import { Download } from 'lucide-react';
+import profileImg from '../../../assets/jofra.jpeg';
 
 export default function AboutWindow({ info }: { info: any }) {
-  const [active, setActive] = useState<number | null>(null);
   const name = info?.name || 'Sivaprakash M';
-  const bio = info?.bio || 'Full Stack Developer · MCA Student · MERN Stack · Open Source';
+  const bio = info?.bio || "I'm a passionate Full Stack Developer who loves building modern, scalable, and user-friendly web applications. I enjoy turning complex problems into simple, beautiful, and intuitive solutions.";
 
   return (
-    <div className="win-about">
-      <div className="win-about__mindmap">
-        <motion.div className="win-about__center" initial={{scale:0,opacity:0}} animate={{scale:1,opacity:1}} transition={{type:'spring',stiffness:300,damping:25}}>
-          {info?.avatar && <img src={info.avatar} alt={name} style={{width:36,height:36,borderRadius:'50%',objectFit:'cover',marginBottom:6}} />}
-          <div className="win-about__center-name">{name}</div>
-          <div style={{fontSize:'0.6rem',color:'rgba(255,255,255,0.5)',marginTop:4,textAlign:'center'}}>{info?.title || 'Full Stack Dev'}</div>
+    <div className="win-about-clean" style={{ height: '100%', overflowY: 'auto', padding: '2rem 1rem' }}>
+      <style>{`
+        .about-container {
+          display: flex;
+          gap: 4rem;
+          max-width: 1000px;
+          margin: 0 auto;
+          align-items: flex-start;
+          margin-bottom: 4rem;
+        }
+        .about-left {
+          flex: 0 0 280px;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .about-image {
+          width: 100%;
+          aspect-ratio: 3/4;
+          object-fit: cover;
+          border-radius: 16px;
+          border: 1px solid rgba(255,255,255,0.1);
+          box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .about-right {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .about-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: white;
+          margin-bottom: 1.5rem;
+          margin-top: 0;
+        }
+        .about-bio {
+          color: rgba(255,255,255,0.8);
+          line-height: 1.8;
+          font-size: 1.15rem;
+          margin-bottom: 2.5rem;
+        }
+
+        .about-resume-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6rem;
+          padding: 0.8rem 1.6rem;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 99px;
+          color: white;
+          font-weight: 600;
+          font-size: 1rem;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          width: fit-content;
+        }
+        .about-resume-btn:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.2);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 768px) {
+          .about-container {
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+          }
+          .about-left {
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 280px;
+          }
+          .about-title {
+            font-size: 2rem;
+            text-align: center;
+          }
+          .about-bio {
+            font-size: 1.05rem;
+            text-align: center;
+          }
+          .about-right {
+            align-items: center;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .about-left {
+            max-width: 220px;
+          }
+          .about-title {
+            font-size: 1.75rem;
+          }
+          .about-bio {
+            font-size: 1rem;
+          }
+        }
+      `}</style>
+
+      <div className="about-container">
+        <motion.div className="about-left" initial={{opacity:0, x:-30}} animate={{opacity:1, x:0}} transition={{duration:0.6}}>
+          <img src={profileImg.src} alt={name} className="about-image" />
         </motion.div>
 
-        <div className="win-about__nodes">
-          {NODES.map((node, i) => (
-            <motion.div
-              key={i}
-              className="win-about__node"
-              initial={{opacity:0,y:20}}
-              animate={{opacity:1,y:0}}
-              transition={{delay:i*0.07}}
-              onClick={() => setActive(active === i ? null : i)}
-              id={`about-node-${i}`}
-              role="button"
-              tabIndex={0}
-              aria-expanded={active === i}
-              onKeyDown={e => e.key === 'Enter' && setActive(active === i ? null : i)}
-            >
-              <div className="win-about__node-title">{node.icon} {node.title}</div>
-              <motion.div
-                className="win-about__node-content"
-                initial={false}
-                animate={{ height: active === i ? 'auto' : '2.8rem', overflow: 'hidden' }}
-                style={{ display: '-webkit-box', WebkitLineClamp: active === i ? undefined : 2, WebkitBoxOrient: 'vertical', overflow: active === i ? 'visible' : 'hidden' }}
-              >
-                {active === i ? node.content : (info && node.title === 'Who I Am' ? (bio || node.content) : node.content)}
-              </motion.div>
-              {active !== i && <div style={{fontSize:'0.7rem',color:'rgba(99,102,241,0.7)',marginTop:4,fontFamily:'var(--font-satoshi)'}}>Click to expand →</div>}
-            </motion.div>
-          ))}
-        </div>
+        <motion.div className="about-right" initial={{opacity:0, x:30}} animate={{opacity:1, x:0}} transition={{duration:0.6, delay:0.2}}>
+          <h1 className="about-title">About Me</h1>
+          <p className="about-bio">{bio}</p>
+          
+          <a href={info?.resume || '/resume.pdf'} target="_blank" rel="noreferrer" className="about-resume-btn">
+            <Download size={18} />
+            Download Resume
+          </a>
+        </motion.div>
       </div>
     </div>
   );

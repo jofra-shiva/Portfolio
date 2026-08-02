@@ -2,13 +2,14 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LandingGate from '../components/OS/LandingGate';
+import CinematicIntro from '../components/OS/CinematicIntro';
 import Desktop from '../components/OS/Desktop';
 import ClientLayout from '../components/Layout/ClientLayout';
 import { getProjects, getSkills, getPortfolioInfo, getStats, getTimeline, getTestimonials, getAchievements } from '../lib/db';
 import { db } from '../lib/firebase';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
-type Phase = 'landing' | 'desktop';
+type Phase = 'landing' | 'intro' | 'desktop';
 
 export default function PortfolioPage() {
   const [phase, setPhase] = useState<Phase>('landing');
@@ -83,12 +84,17 @@ export default function PortfolioPage() {
   return (
     <ClientLayout>
       <AnimatePresence mode="wait">
-        {/* Phase 1: Landing Gate — full portfolio intro */}
+        {/* Phase 1: Landing Gate */}
         {phase === 'landing' && (
-          <LandingGate key="landing" onEnter={() => setPhase('desktop')} info={info} stats={stats} projects={projects} />
+          <LandingGate key="landing" onEnter={() => setPhase('intro')} info={info} stats={stats} projects={projects} />
         )}
 
-        {/* Phase 2: OS Desktop */}
+        {/* Phase 2: Intro Video */}
+        {phase === 'intro' && (
+          <CinematicIntro key="intro" onComplete={() => setPhase('desktop')} />
+        )}
+
+        {/* Phase 3: OS Desktop */}
         {phase === 'desktop' && (
           <Desktop key="desktop" data={data} />
         )}

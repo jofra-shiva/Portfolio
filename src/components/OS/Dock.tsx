@@ -1,86 +1,165 @@
 "use client";
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { WindowId } from './WindowManager';
 import { useWindowManager } from './WindowManager';
+import { useRef } from 'react';
+import Image from 'next/image';
 
-const DOCK_ITEMS: { id: WindowId; label: string; color: string; iconColor: string; svg: React.ReactNode }[] = [
-  {
-    id: 'projects', label: 'Code Lab', color: '#0d1b2a', iconColor: '#00d4ff',
-    svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} width={22} height={22}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
-  },
-  {
-    id: 'about', label: 'Whoami', color: '#1a0d2e', iconColor: '#a78bfa',
-    svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} width={22} height={22}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
-  },
-  {
-    id: 'skills', label: 'Tech', color: '#0d1a0d', iconColor: '#00ff88',
-    svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} width={22} height={22}><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>,
-  },
-  {
-    id: 'experience', label: 'Work', color: '#1a1a0d', iconColor: '#fbbf24',
-    svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} width={22} height={22}><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>,
-  },
-  {
-    id: 'github', label: 'Git', color: '#0d0d0d', iconColor: '#e2e8f0',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor" width={22} height={22}><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>,
-  },
-  {
-    id: 'contact', label: 'Netcat', color: '#0d1a2a', iconColor: '#38bdf8',
-    svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} width={22} height={22}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
-  },
+const DOCK_ITEMS: { id: WindowId; label: string; svg: React.ReactNode }[] = [
+  { id: 'projects', label: 'Projects', svg: <Image src="/dock/projects.png" alt="Projects" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'skills', label: 'Skills', svg: <Image src="/dock/skills.png" alt="Skills" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'about', label: 'About Me', svg: <Image src="/dock/about.png" alt="About" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'experience', label: 'Experience', svg: <Image src="/dock/experience.png" alt="Experience" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'education', label: 'Education', svg: <Image src="/dock/education.png" alt="Education" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'awards', label: 'Awards', svg: <Image src="/dock/awards.png" alt="Awards" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'github', label: 'GitHub', svg: <Image src="/dock/github.png" alt="GitHub" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
+  { id: 'contact', label: 'Contact', svg: <Image src="/dock/contact.png" alt="Contact" width={60} height={60} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '22%' }} /> },
 ];
 
-export default function Dock({ onOpenWindow }: { onOpenWindow: (id: WindowId) => void }) {
-  const { isOpen, windows } = useWindowManager();
+function DockItem({ item, mouseX }: { item: typeof DOCK_ITEMS[0], mouseX: any }) {
+  const { isOpen, openWindow } = useWindowManager();
+  const active = isOpen(item.id);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // macOS Dock magnification logic
+  const distance = useTransform(mouseX, (val: number) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  const widthSync = useTransform(distance, [-150, 0, 150], [50, 80, 50]);
+  const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 });
 
   return (
     <motion.div
-      className="os-dock"
-      initial={{ y: 80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      ref={ref}
+      style={{ width, height: width }}
+      className="mac-dock-item-container"
+      onClick={() => openWindow(item.id)}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open ${item.label}`}
+    >
+      {/* Icon Image */}
+      <motion.div className="mac-dock-icon" whileTap={{ scale: 0.85 }}>
+        {item.svg}
+      </motion.div>
+      
+      {/* Tooltip */}
+      <div className="mac-dock-tooltip">{item.label}</div>
+      
+      {/* Active Indicator Dot */}
+      <motion.div
+        className="mac-dock-dot"
+        initial={{ scale: 0 }}
+        animate={{ scale: active ? 1 : 0 }}
+        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+      />
+    </motion.div>
+  );
+}
+
+export default function Dock({ onOpenWindow }: { onOpenWindow: (id: WindowId) => void }) {
+  const mouseX = useMotionValue(Infinity);
+
+  return (
+    <motion.div
+      className="mac-dock-wrapper"
+      initial={{ y: 80, x: '-50%', opacity: 0 }}
+      animate={{ y: 0, x: '-50%', opacity: 1 }}
       transition={{ delay: 0.4, type: 'spring', stiffness: 280, damping: 26 }}
     >
-      <div className="os-dock__inner kali-dock__inner">
-        {DOCK_ITEMS.map((item) => {
-          const active = isOpen(item.id);
-          return (
-            <motion.div
-              key={item.id}
-              className="os-dock__item kali-dock__item"
-              onClick={() => onOpenWindow(item.id)}
-              whileHover={{ y: -12, scale: 1.25 }}
-              whileTap={{ scale: 0.88 }}
-              transition={{ type: 'spring', stiffness: 420, damping: 18 }}
-              title={item.label}
-              id={`dock-${item.id}`}
-              role="button"
-              aria-label={`Open ${item.label}`}
-            >
-              <div
-                className="kali-dock__icon"
-                style={{
-                  background: item.color,
-                  color: item.iconColor,
-                  border: `1px solid ${item.iconColor}25`,
-                  boxShadow: active
-                    ? `0 0 0 1.5px ${item.iconColor}60, 0 8px 24px rgba(0,0,0,0.6)`
-                    : '0 4px 16px rgba(0,0,0,0.5)',
-                }}
-              >
-                {item.svg}
-              </div>
-              {active && (
-                <motion.div
-                  layoutId={`dock-dot-${item.id}`}
-                  className="os-dock__item-dot"
-                  style={{ background: item.iconColor }}
-                />
-              )}
-              <div className="os-dock__tooltip kali-dock__tooltip">{item.label}</div>
-            </motion.div>
-          );
-        })}
+      <div
+        className="mac-dock-inner"
+        onMouseMove={(e) => mouseX.set(e.clientX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+      >
+        {DOCK_ITEMS.map((item) => (
+          <DockItem key={item.id} item={item} mouseX={mouseX} />
+        ))}
       </div>
+      
+      {/* Injecting CSS specifically for the Mac dock to ensure it renders correctly immediately */}
+      <style>{`
+        .mac-dock-wrapper {
+          position: fixed;
+          bottom: 12px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 800;
+          pointer-events: none;
+          max-width: 100vw;
+        }
+        .mac-dock-inner {
+          display: flex;
+          align-items: flex-end;
+          gap: 12px;
+          padding: 8px 12px;
+          background: rgba(44, 44, 46, 0.65);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 24px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+          pointer-events: auto;
+          transform-origin: bottom center;
+          max-width: calc(100vw - 20px);
+          overflow-x: auto;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .mac-dock-inner::-webkit-scrollbar {
+          display: none;
+        }
+        .mac-dock-item-container {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .mac-dock-icon {
+          width: 100%;
+          height: 100%;
+          border-radius: 22%;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transform-origin: bottom;
+          will-change: transform, width, height;
+        }
+        .mac-dock-dot {
+          width: 4px;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 50%;
+          margin-top: 4px;
+          box-shadow: 0 0 4px rgba(255,255,255,0.4);
+        }
+        .mac-dock-tooltip {
+          position: absolute;
+          top: -45px;
+          background: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(10px);
+          color: white;
+          padding: 6px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          white-space: nowrap;
+          pointer-events: none;
+          opacity: 0;
+          transform: translateY(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .mac-dock-item-container:hover .mac-dock-tooltip {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      `}</style>
     </motion.div>
   );
 }

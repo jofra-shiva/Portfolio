@@ -1,96 +1,104 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=Audiowide&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap');
 
 /* =====================================================
    PREMIUM FUTURISTIC DESIGN SYSTEM
    ===================================================== */
 :root {
-  /* === DEEP NAVY CYBERPUNK PALETTE === */
-  --bg-void:         #020509;
-  --bg-deep:         #050B1F;
-  --bg-space:        #080E1E;
-  --bg-card:         rgba(255, 255, 255, 0.03);
-  --bg-card-hover:   rgba(255, 255, 255, 0.06);
-  --bg-glass:        rgba(5, 11, 31, 0.7);
-  --bg-input:        rgba(255, 255, 255, 0.05);
+  /* === macOS DARK PALETTE === */
+  --bg-void:         #000000;
+  --bg-deep:         #1c1c1e;
+  --bg-space:        #2c2c2e;
+  --bg-card:         rgba(30, 30, 30, 0.6);
+  --bg-card-hover:   rgba(44, 44, 46, 0.8);
+  --bg-glass:        rgba(30, 30, 30, 0.65);
+  --bg-input:        rgba(255, 255, 255, 0.1);
 
   /* === OVERLAYS === */
-  --bg-overlay-radial: rgba(5, 11, 31, 0.2);
-  --bg-overlay-linear-1: rgba(5, 11, 31, 0.4);
-  --bg-overlay-linear-2: rgba(5, 11, 31, 0.1);
-  --bg-overlay-linear-3: rgba(5, 11, 31, 0.6);
+  --bg-overlay-radial: rgba(0, 0, 0, 0.2);
+  --bg-overlay-linear-1: rgba(0, 0, 0, 0.4);
+  --bg-overlay-linear-2: rgba(255, 255, 255, 0.05);
+  --bg-overlay-linear-3: rgba(0, 0, 0, 0.6);
 
   /* === NEON PALETTE === */
-  --neon-purple:     #7c3aed;
-  --neon-violet:     #8b5cf6;
-  --neon-violet-lt:  #a78bfa;
-  --neon-cyan:       #00d2ff;
-  --neon-blue:       #3b82f6;
-  --neon-pink:       #ec4899;
-  --success:         #10b981;
-  --gold:            #f59e0b;
+  --neon-purple:     #6d28d9;
+  --neon-violet:     #7c3aed;
+  --neon-violet-lt:  #8b5cf6;
+  --neon-cyan:       #0ea5e9;
+  --neon-blue:       #2563eb;
+  --neon-pink:       #db2777;
+  
+  /* === macOS SYSTEM COLORS === */
+  --mac-blue:        #0a84ff;
+  --mac-purple:      #bf5af2;
+  --mac-pink:        #ff375f;
+  --mac-red:         #ff453a;
+  --mac-orange:      #ff9f0a;
+  --mac-yellow:      #ffd60a;
+  --mac-green:       #32d74b;
+  --mac-teal:        #64d2ff;
+  
+  --success:         var(--mac-green);
+  --gold:            var(--mac-yellow);
+  --danger:          var(--mac-red);
 
   /* === ALIASES === */
-  --primary:         var(--neon-violet);
-  --primary-dark:    var(--neon-purple);
-  --primary-light:   var(--neon-violet-lt);
-  --accent:          var(--neon-cyan);
-  --danger:          #ef4444;
+  --primary:         var(--mac-blue);
+  --primary-dark:    #0060d1;
+  --primary-light:   #5e9cff;
+  --accent:          var(--mac-purple);
 
   /* === TEXT === */
-  --text-primary:    #f0f0ff;
-  --text-secondary:  #b4b4d4;
-  --text-muted:      #5a5a7a;
-  --text-code:       var(--neon-cyan);
+  --text-primary:    #ffffff;
+  --text-secondary:  #ebebf5;
+  --text-muted:      rgba(235, 235, 245, 0.6);
+  --text-code:       var(--mac-pink);
 
   /* === BORDERS / GLASS === */
-  --border:          rgba(139, 92, 246, 0.18);
-  --border-bright:   rgba(139, 92, 246, 0.45);
-  --glass-border:    rgba(255, 255, 255, 0.08);
-  --glass-shadow:    0 8px 40px 0 rgba(0, 0, 0, 0.6);
+  --border:          rgba(255, 255, 255, 0.15);
+  --border-bright:   rgba(255, 255, 255, 0.3);
+  --glass-border:    rgba(255, 255, 255, 0.1);
+  --glass-shadow:    0 8px 32px 0 rgba(0, 0, 0, 0.3);
 
-  /* === GLOW EFFECTS === */
-  --glow-purple:     0 0 20px rgba(124, 58, 237, 0.5), 0 0 60px rgba(124, 58, 237, 0.2);
-  --glow-cyan:       0 0 20px rgba(0, 210, 255, 0.5), 0 0 60px rgba(0, 210, 255, 0.2);
-  --glow-blue:       0 0 20px rgba(59, 130, 246, 0.5);
-  --glow-card:       0 20px 60px -10px rgba(124, 58, 237, 0.25);
+  /* === GLOW EFFECTS (Subdued for Mac) === */
+  --glow-purple:     0 0 20px rgba(191, 90, 242, 0.3);
+  --glow-cyan:       0 0 20px rgba(100, 210, 255, 0.3);
+  --glow-blue:       0 0 20px rgba(10, 132, 255, 0.3);
+  --glow-card:       0 10px 30px rgba(0, 0, 0, 0.5);
 
   /* === GRADIENTS === */
-  --grad-hero:       radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124,58,237,0.25) 0%, transparent 70%);
-  --grad-primary:    linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
-  --grad-neon:       linear-gradient(135deg, #8b5cf6 0%, #00d2ff 100%);
-  --grad-text:       linear-gradient(135deg, #f0f0ff 0%, #a78bfa 50%, #00d2ff 100%);
-  --grad-glass:      linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  --grad-card-border:linear-gradient(135deg, rgba(139,92,246,0.5), rgba(0,210,255,0.3), rgba(139,92,246,0.5));
+  --grad-primary:    linear-gradient(135deg, var(--mac-blue) 0%, var(--mac-purple) 100%);
+  --grad-glass:      linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  --grad-card-border:linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
 
   /* === SHADOWS === */
-  --shadow-card:     0 20px 60px -15px rgba(0,0,0,0.7);
-  --shadow-glow:     0 0 40px rgba(139,92,246,0.15);
+  --shadow-card:     0 20px 40px rgba(0,0,0,0.4);
+  --shadow-glow:     0 0 20px rgba(0,0,0,0.5);
 
   /* === SPACING === */
   --section-pad:     0px 0 90px 0;
   --container-max:   1320px;
 
   /* === RADIUS === */
-  --r-sm:   12px;
-  --r-md:   20px;
-  --r-lg:   32px;
-  --r-xl:   48px;
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   18px;
+  --r-xl:   24px;
   --r-full: 9999px;
 
   /* === TYPOGRAPHY === */
-  --font-display:  'Audiowide', sans-serif;
-  --font-body:     'Space Grotesk', sans-serif;
-  --font-alt:      'Inter', sans-serif;
-  --font-mono:     'JetBrains Mono', monospace;
+  --font-heading:    'Outfit', sans-serif;
+  --font-body:       'Outfit', sans-serif;
+  --font-alt:        'Outfit', sans-serif;
+  --font-mono:       'JetBrains Mono', monospace;
 
   /* === TRANSITIONS === */
-  --ease:          cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease:          cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-spring:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --ease-out:      cubic-bezier(0.0, 0.0, 0.2, 1);
-  --t-fast:        all 0.2s var(--ease);
-  --t-med:         all 0.4s var(--ease);
-  --t-slow:        all 0.7s var(--ease);
+  --t-fast:        all 0.15s var(--ease);
+  --t-med:         all 0.3s var(--ease);
+  --t-slow:        all 0.5s var(--ease);
 }
 
 /* =====================================================
@@ -464,11 +472,18 @@ html {
   overflow-x: hidden;
 }
 
+/* ── Body & MacOS Wallpaper ────────────────────────────────────────── */
 body {
-  font-family: var(--font-body);
-  background: var(--bg-deep);
+  background-color: var(--bg-void);
+  
   color: var(--text-primary);
-  line-height: 1.65;
+  font-family: var(--font-body);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  
+  line-height: 1.6;
+  position: relative;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -477,6 +492,48 @@ body {
   user-select: none;
   -webkit-user-select: none;
   cursor: default;
+}
+
+@keyframes cinematicPan {
+  0% { transform: scale(1.05) translate(0px, 0px) rotate(0deg); }
+  33% { transform: scale(1.12) translate(-1%, 1%) rotate(0.5deg); }
+  66% { transform: scale(1.08) translate(1%, -1%) rotate(-0.5deg); }
+  100% { transform: scale(1.05) translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes cinematicGlow {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -5%;
+  left: -5%;
+  right: -5%;
+  bottom: -5%;
+  z-index: -2;
+  background-image: url('/wallpaper.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: saturate(1.2) contrast(1.1);
+  animation: cinematicPan 25s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
+              radial-gradient(circle at 70% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 60%);
+  animation: cinematicGlow 12s ease-in-out infinite;
+  pointer-events: none;
 }
 
 input, textarea {
@@ -1154,12 +1211,19 @@ section[id] { scroll-margin-top: 58px; }
   50% { opacity: 0; }
 }
 
+.landing-gate__line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+  margin: 0.75rem 0;
+}
+
 .landing-gate__tap-text {
-  font-family: 'Hack', 'JetBrains Mono', 'Courier New', monospace;
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-family: var(--font-satoshi), sans-serif;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #00d4ff;
+  letter-spacing: 0.1em;
+  color: white;
   text-transform: uppercase;
 }
 
@@ -1247,7 +1311,7 @@ section[id] { scroll-margin-top: 58px; }
   height: 100vh;
   overflow: hidden;
   font-family: var(--font-satoshi);
-  background: #050816;
+  background: transparent;
 }
 
 .os-wallpaper {
@@ -1739,10 +1803,9 @@ section[id] { scroll-margin-top: 58px; }
 }
 
 .win-project-card:hover {
-  border-color: rgba(99,102,241,0.4);
-  background: rgba(99,102,241,0.06);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(99,102,241,0.15);
+  border-color: rgba(0, 212, 255, 0.8);
+  background: rgba(0, 212, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), inset 0 0 15px rgba(0, 212, 255, 0.2);
 }
 
 .win-project-card__image {
@@ -2303,9 +2366,32 @@ section[id] { scroll-margin-top: 58px; }
 
   .os-window { min-width: 92vw; max-width: 96vw !important; }
 
+  .win-projects,
+  .win-skills,
+  .win-about,
+  .win-experience,
+  .win-education,
+  .win-awards,
+  .win-contact,
+  .win-github {
+    padding: 0.8rem;
+  }
+
+  .win-projects__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .win-projects__filter {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+
   .win-contact__grid { grid-template-columns: 1fr; }
 
-  .win-projects__grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .win-projects__grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
 }
 
 @media (max-width: 480px) {
