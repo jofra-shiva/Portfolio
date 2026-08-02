@@ -7,7 +7,7 @@
   border-radius: 50%;
   background: var(--grad-primary);
   color: white;
-  display: flex;
+  display: none; /* Hidden on OS desktop — integrated into dock */
   align-items: center;
   justify-content: center;
   cursor: pointer;

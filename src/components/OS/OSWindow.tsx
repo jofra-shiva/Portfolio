@@ -100,7 +100,7 @@ export default function OSWindow({ id, title, icon, width, height, x, y, zIndex,
       aria-label={`${title} window`}
       aria-modal="true"
     >
-      {/* Title bar */}
+      {/* Title bar — Kali terminal style */}
       <div
         className="os-window__titlebar"
         onMouseDown={handleTitleMouseDown}
@@ -129,11 +129,16 @@ export default function OSWindow({ id, title, icon, width, height, x, y, zIndex,
           >+</button>
         </div>
 
-        <div className="os-window__title-wrap">
-          <span style={{ fontSize: '1rem' }}>{icon}</span>
-          <span>{title}</span>
+        {/* Kali terminal prompt style title */}
+        <div className="os-window__title-wrap" style={{ fontFamily: "'Hack','JetBrains Mono','Courier New',monospace", gap: 0 }}>
+          <span style={{ color: '#00ff88', fontSize: '0.7rem', marginRight: 2 }}>kali</span>
+          <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7rem' }}>@</span>
+          <span style={{ color: '#00d4ff', fontSize: '0.7rem' }}>portfolio</span>
+          <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7rem', margin: '0 4px' }}>:</span>
+          <span style={{ color: '#a78bfa', fontSize: '0.7rem' }}>~/{title.toLowerCase().replace(/ /g, '-')}</span>
+          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.7rem', marginLeft: 4 }}>$</span>
           {maximized && (
-            <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', marginLeft: 4 }}>(maximized)</span>
+            <span style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>[MAX]</span>
           )}
         </div>
         <div style={{ width: 60, flexShrink: 0 }} />
