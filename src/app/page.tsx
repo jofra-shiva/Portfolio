@@ -160,7 +160,7 @@ export default function PortfolioPage() {
               LinkedIn: <a href="https://www.linkedin.com/in/sivaprakashm/" rel="me">linkedin.com/in/sivaprakashm</a>
             </li>
             <li>
-              Instagram: <a href="https://www.instagram.com/sivaprakash.m_/" rel="me">instagram.com/sivaprakash.m_</a>
+              Instagram: <a href="https://www.instagram.com/leocodexx/" rel="me">instagram.com/leocodexx</a>
             </li>
             <li>Location: Theni, Tamil Nadu, India</li>
           </ul>
