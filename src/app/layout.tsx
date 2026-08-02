@@ -166,7 +166,7 @@ export const metadata: Metadata = {
 
   // ── Verification placeholders (replace with real tokens) ─────────────────
   verification: {
-    google: "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN",
+    google: 'YAQD0IaEkzsNjEz1oxmVA_8cVC2CU7NVxaQtYFrJBG0',
     // bing: "REPLACE_WITH_BING_WEBMASTER_TOKEN",
     // yandex: "REPLACE_WITH_YANDEX_TOKEN",
   },
